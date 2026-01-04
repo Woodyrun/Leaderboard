@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desert Sprint - WoodyRun Leaderboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'wr-green': '#00ff00',
+                        'wr-lime': '#b4ff00',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
+    <!-- Header -->
+    <header class="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3">
+                    <img src="img/woodyrun-logo.png" alt="WR Logo" class="h-16 w-auto">
+                    <div>
+                        <h1 class="text-2xl font-bold bg-gradient-to-r from-green-500 to-lime-400 bg-clip-text text-transparent">WoodyRun</h1>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">Speedrun Leaderboards</p>
+                    </div>
+                </div>
+
+                <!-- Navigation & Search -->
+                <div class="hidden md:flex items-center space-x-6">
+                    <nav class="flex items-center space-x-6">
+                        <a href="overall.html" class="text-gray-700 dark:text-gray-200 hover:text-green-500 dark:hover:text-lime-400 font-medium transition">Overall</a>
+                        <a href="#" class="text-green-500 dark:text-lime-400 font-medium">Maps</a>
+                        <a href="players.html" class="text-gray-700 dark:text-gray-200 hover:text-green-500 dark:hover:text-lime-400 font-medium transition">Players</a>
+                        <a href="seasons.html" class="text-gray-700 dark:text-gray-200 hover:text-green-500 dark:hover:text-lime-400 font-medium transition">Seasons</a>
+                    </nav>
+                    
+                    <!-- Search Bar -->
+                    <div class="relative">
+                        <input type="text" placeholder="Search players & maps..." class="pl-10 pr-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-green-500 focus:border-transparent w-64">
+                        <svg class="w-5 h-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Dark Mode Toggle -->
+                <button id="themeToggle" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition">
+                    <svg id="sunIcon" class="w-6 h-6 text-gray-800 dark:text-gray-200 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                    </svg>
+                    <svg id="moonIcon" class="w-6 h-6 text-gray-800 dark:text-gray-200 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- Back Button -->
+        <a href="#" class="inline-flex items-center text-green-600 dark:text-lime-400 hover:text-green-700 dark:hover:text-lime-300 mb-6">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+            </svg>
+            Back to Maps
+        </a>
+
+        <!-- Map Header -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden mb-6">
+            <div class="h-48 bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center">
+                <svg class="w-24 h-24 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path>
+                </svg>
+            </div>
+            <div class="p-6">
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
+                    <div>
+                        <div class="flex items-center space-x-3 mb-2">
+                            <h2 class="text-3xl font-bold text-gray-900 dark:text-white">Desert Sprint</h2>
+                            <span class="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-sm font-semibold rounded">Easy</span>
+                        </div>
+                        <p class="text-gray-600 dark:text-gray-400">Fast-paced desert parkour with 3 checkpoints</p>
+                    </div>
+                </div>
+
+                <!-- Map Stats -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-1">World Record</p>
+                        <p class="text-2xl font-bold bg-gradient-to-r from-green-500 to-lime-400 bg-clip-text text-transparent">1:23.45</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-1">Total Completions</p>
+                        <p class="text-2xl font-bold text-gray-900 dark:text-white">1,247</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-1">Checkpoints</p>
+                        <p class="text-2xl font-bold text-gray-900 dark:text-white">3</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-1">Date Added</p>
+                        <p class="text-2xl font-bold text-gray-900 dark:text-white">Jan 2024</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Season Selector & Filters -->
+        <div class="flex items-center justify-between mb-4">
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white">Leaderboard</h3>
+            <div class="flex items-center space-x-3">
+                <select class="px-4 py-2 rounded-lg bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white font-medium focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                    <option>Season 3 (Current)</option>
+                    <option>Season 2</option>
+                    <option>Season 1</option>
+                    <option>All Time</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Leaderboard Table -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="w-full">
+                    <thead class="bg-gray-50 dark:bg-gray-700/50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Rank</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Player</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Time</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">vs WR</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Date</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Splits</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+                        <!-- Rank 1 - WR -->
+                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition cursor-pointer" onclick="window.location.href='player-profile.html'">
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-yellow-400 to-yellow-600 text-white font-bold text-sm">1</span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center space-x-3">
+                                    <img src="https://mc-heads.net/avatar/Notch" alt="Player" class="w-10 h-10 rounded-lg">
+                                    <div>
+                                        <span class="font-medium text-gray-900 dark:text-white">Speedrunner123</span>
+                                        <span class="ml-2 px-2 py-0.5 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400 text-xs font-semibold rounded">WR</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="text-lg font-bold bg-gradient-to-r from-green-500 to-lime-400 bg-clip-text text-transparent">1:23.45</span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="text-green-600 dark:text-green-400 font-medium">—</span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-gray-600 dark:text-gray-400">Dec 28, 2024</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <button class="text-green-600 dark:text-lime-400 hover:text-green-700 dark:hover:text-lime-300 font-medium text-sm" onclick="event.stopPropagation(); toggleSplits('splits1')">View</button>
+                            </td>
+                        </tr>
+                        <tr id="splits1" class="hidden bg-gray-50 dark:bg-gray-700/30">
+                            <td colspan="6" class="px-6 py-4">
+                                <div class="flex items-center space-x-8">
+                                    <div>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400 mb-1">Checkpoint 1</p>
+                                        <p class="font-mono text-sm font-medium text-gray-900 dark:text-white">0:18.23</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400 mb-1">Checkpoint 2</p>
+                                        <p class="font-mono text-sm font-medium text-gray-900 dark:text-white">0:42.81</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400 mb-1">Checkpoint 3</p>
+                                        <p class="font-mono text-sm font-medium text-gray-900 dark:text-white">1:08.12</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400 mb-1">Finish</p>
+                                        <p class="font-mono text-sm font-medium text-green-600 dark:text-green-400">1:23.45</p>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <!-- Rank 2 -->
+                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition cursor-pointer" onclick="window.location.href='player-profile.html'">
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-gray-300 to-gray-400 text-white font-bold text-sm">2</span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center space-x-3">
+                                    <img src="https://mc-heads.net/avatar/jeb_" alt="Player" class="w-10 h-10 rounded-lg">
+                                    <span class="font-medium text-gray-900 dark:text-white">ProParkour</span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="text-lg font-bold text-gray-900 dark:text-white">1:23.79</span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="text-orange-600 dark:text-orange-400 font-medium">+0.34s</span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-gray-600 dark:text-gray-400">Dec 30, 2024</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <button class="text-green-600 dark:text-lime-400 hover:text-green-700 dark:hover:text-lime-300 font-medium text-sm" onclick="event.stopPropagation(); toggleSplits('splits2')">View</button>
+                            </td>
+                        </tr>
+                        <tr id="splits2" class="hidden bg-gray-50 dark:bg-gray-700/30">
+                            <td colspan="6" class="px-6 py-4">
+                                <div class="flex items-center space-x-8">
+                                    <div>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400 mb-1">Checkpoint 1</p>
+                                        <p class="font-mono text-sm font-medium text-gray-900 dark:text-white">0:18.45</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400 mb-1">Checkpoint 2</p>
+                                        <p class="font-mono text-sm font-medium text-gray-900 dark:text-white">0:43.12</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400 mb-1">Checkpoint 3</p>
+                                        <p class="font-mono text-sm font-medium text-gray-900 dark:text-white">1:08.34</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400 mb-1">Finish</p>
+                                        <p class="font-mono text-sm font-medium text-green-600 dark:text-green-400">1:23.79</p>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <!-- Rank 3 -->
+                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition cursor-pointer" onclick="window.location.href='player-profile.html'">
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center">
+                                    <span class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-orange-400 to-orange-600 text-white font-bold text-sm">3</span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center space-x-3">
+                                    <img src="https://mc-heads.net/avatar/Dinnerbone" alt="Player" class="w-10 h-10 rounded-lg">
+                                    <span class="font-medium text-gray-900 dark:text-white">JumpMaster</span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="text-lg font-bold text-gray-900 dark:text-white">1:24.12</span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="text-orange-600 dark:text-orange-400 font-medium">+0.67s</span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-gray-600 dark:text-gray-400">Jan 1, 2025</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <button class="text-green-600 dark:text-lime-400 hover:text-green-700 dark:hover:text-lime-300 font-medium text-sm" onclick="event.stopPropagation(); toggleSplits('splits3')">View</button>
+                            </td>
+                        </tr>
+                        <tr id="splits3" class="hidden bg-gray-50 dark:bg-gray-700/30">
+                            <td colspan="6" class="px-6 py-4">
+                                <div class="flex items-center space-x-8">
+                                    <div>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400 mb-1">Checkpoint 1</p>
+                                        <p class="font-mono text-sm font-medium text-gray-900 dark:text-white">0:18.67</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400 mb-1">Checkpoint 2</p>
+                                        <p class="font-mono text-sm font-medium text-gray-900 dark:text-white">0:43.45</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400 mb-1">Checkpoint 3</p>
+                                        <p class="font-mono text-sm font-medium text-gray-900 dark:text-white">1:08.89</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400 mb-1">Finish</p>
+                                        <p class="font-mono text-sm font-medium text-green-600 dark:text-green-400">1:24.12</p>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <!-- More ranks -->
+                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition cursor-pointer" onclick="window.location.href='player-profile.html'">
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="text-gray-600 dark:text-gray-400 font-medium">4</span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center space-x-3">
+                                    <img src="https://mc-heads.net/avatar/Grumm" alt="Player" class="w-10 h-10 rounded-lg">
+                                    <span class="font-medium text-gray-900 dark:text-white">NinjaParkour</span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="text-lg font-bold text-gray-900 dark:text-white">1:25.34</span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="text-red-600 dark:text-red-400 font-medium">+1.89s</span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-gray-600 dark:text-gray-400">Dec 29, 2024</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <button class="text-green-600 dark:text-lime-400 hover:text-green-700 dark:hover:text-lime-300 font-medium text-sm" onclick="event.stopPropagation(); toggleSplits('splits4')">View</button>
+                            </td>
+                        </tr>
+                        <tr id="splits4" class="hidden bg-gray-50 dark:bg-gray-700/30">
+                            <td colspan="6" class="px-6 py-4">
+                                <div class="flex items-center space-x-8">
+                                    <div>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400 mb-1">Checkpoint 1</p>
+                                        <p class="font-mono text-sm font-medium text-gray-900 dark:text-white">0:19.12</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400 mb-1">Checkpoint 2</p>
+                                        <p class="font-mono text-sm font-medium text-gray-900 dark:text-white">0:44.23</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400 mb-1">Checkpoint 3</p>
+                                        <p class="font-mono text-sm font-medium text-gray-900 dark:text-white">1:09.78</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400 mb-1">Finish</p>
+                                        <p class="font-mono text-sm font-medium text-green-600 dark:text-green-400">1:25.34</p>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition cursor-pointer" onclick="window.location.href='player-profile.html'">
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="text-gray-600 dark:text-gray-400 font-medium">5</span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center space-x-3">
+                                    <img src="https://mc-heads.net/avatar/Dream" alt="Player" class="w-10 h-10 rounded-lg">
+                                    <span class="font-medium text-gray-900 dark:text-white">BlockRunner</span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="text-lg font-bold text-gray-900 dark:text-white">1:26.78</span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="text-red-600 dark:text-red-400 font-medium">+3.33s</span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-gray-600 dark:text-gray-400">Dec 27, 2024</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <button class="text-green-600 dark:text-lime-400 hover:text-green-700 dark:hover:text-lime-300 font-medium text-sm" onclick="event.stopPropagation(); toggleSplits('splits5')">View</button>
+                            </td>
+                        </tr>
+                        <tr id="splits5" class="hidden bg-gray-50 dark:bg-gray-700/30">
+                            <td colspan="6" class="px-6 py-4">
+                                <div class="flex items-center space-x-8">
+                                    <div>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400 mb-1">Checkpoint 1</p>
+                                        <p class="font-mono text-sm font-medium text-gray-900 dark:text-white">0:19.56</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400 mb-1">Checkpoint 2</p>
+                                        <p class="font-mono text-sm font-medium text-gray-900 dark:text-white">0:45.12</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400 mb-1">Checkpoint 3</p>
+                                        <p class="font-mono text-sm font-medium text-gray-900 dark:text-white">1:11.23</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400 mb-1">Finish</p>
+                                        <p class="font-mono text-sm font-medium text-green-600 dark:text-green-400">1:26.78</p>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- View More -->
+            <div class="px-6 py-4 bg-gray-50 dark:bg-gray-700/30 border-t border-gray-200 dark:border-gray-700">
+                <button class="w-full py-2 text-sm font-medium text-green-600 dark:text-lime-400 hover:text-green-700 dark:hover:text-lime-300 transition">
+                    View Full Leaderboard →
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Dark mode toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const html = document.documentElement;
+
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        if (currentTheme === 'dark') {
+            html.classList.add('dark');
+        }
+
+        themeToggle.addEventListener('click', () => {
+            html.classList.toggle('dark');
+            const theme = html.classList.contains('dark') ? 'dark' : 'light';
+            localStorage.setItem('theme', theme);
+        });
+
+        // Toggle splits display
+        function toggleSplits(id) {
+            const splitsRow = document.getElementById(id);
+            splitsRow.classList.toggle('hidden');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maps - WoodyRun Leaderboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'wr-green': '#00ff00',
+                        'wr-lime': '#b4ff00',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Image slide animations */
+        .map-card-image {
+            transform: translateX(0);
+            transition: transform 0.4s ease-in-out;
+        }
+
+        .map-card:hover .map-card-image {
+            transform: translateX(100%);
+        }
+
+        .map-card-icon {
+            transform: translateX(100%);
+            transition: transform 0.4s ease-in-out;
+        }
+
+        .map-card:hover .map-card-icon {
+            transform: translateX(0);
+        }
+
+        /* Reverse mode - icon shows first */
+        .icon-first .map-card-image {
+            transform: translateX(100%);
+        }
+
+        .icon-first .map-card:hover .map-card-image {
+            transform: translateX(0);
+        }
+
+        .icon-first .map-card-icon {
+            transform: translateX(0);
+        }
+
+        .icon-first .map-card:hover .map-card-icon {
+            transform: translateX(100%);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
+    <!-- Header -->
+    <header class="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <img src="img/woodyrun-logo.png" alt="WR Logo" class="h-16 w-auto">
+                    <div>
+                        <h1 class="text-2xl font-bold bg-gradient-to-r from-green-500 to-lime-400 bg-clip-text text-transparent">WoodyRun</h1>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">Speedrun Leaderboards</p>
+                    </div>
+                </div>
+
+                <div class="hidden md:flex items-center space-x-6">
+                    <nav class="flex items-center space-x-6">
+                        <a href="overall.html" class="text-gray-700 dark:text-gray-200 hover:text-green-500 dark:hover:text-lime-400 font-medium transition">Overall</a>
+                        <a href="#" class="text-green-500 dark:text-lime-400 font-medium">Maps</a>
+                        <a href="players.html" class="text-gray-700 dark:text-gray-200 hover:text-green-500 dark:hover:text-lime-400 font-medium transition">Players</a>
+                        <a href="seasons.html" class="text-gray-700 dark:text-gray-200 hover:text-green-500 dark:hover:text-lime-400 font-medium transition">Seasons</a>
+                    </nav>
+                    
+                    <div class="relative">
+                        <input type="text" id="mapSearch" placeholder="Search players & maps..." class="pl-10 pr-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-green-500 focus:border-transparent w-64">
+                        <svg class="w-5 h-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                    </div>
+                </div>
+
+                <button id="themeToggle" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition">
+                    <svg id="sunIcon" class="w-6 h-6 text-gray-800 dark:text-gray-200 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                    </svg>
+                    <svg id="moonIcon" class="w-6 h-6 text-gray-800 dark:text-gray-200 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+        <div class="mb-6">
+            <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">Parkour Maps</h2>
+            <p class="text-gray-600 dark:text-gray-400">Browse all speedrun maps and view leaderboards</p>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-4 mb-6">
+            <select id="difficultyFilter" class="px-4 py-2 rounded-lg bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white font-medium focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                <option value="all">All Difficulties</option>
+                <option value="easy">Easy</option>
+                <option value="medium">Medium</option>
+                <option value="hard">Hard</option>
+            </select>
+
+            <select id="sortFilter" class="px-4 py-2 rounded-lg bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white font-medium focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                <option value="name">Name (A-Z)</option>
+                <option value="difficulty">Difficulty</option>
+                <option value="popular">Most Popular</option>
+                <option value="newest">Newest First</option>
+            </select>
+
+            <div class="ml-auto flex items-center space-x-4">
+                <span class="text-gray-600 dark:text-gray-400">
+                    <span class="font-semibold text-gray-900 dark:text-white">18</span> maps
+                </span>
+                
+                <div class="flex items-center space-x-2">
+                    <button id="gridViewBtn" class="p-2 rounded-lg bg-green-600 dark:bg-lime-400 text-white">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
+                        </svg>
+                    </button>
+                    <button id="listViewBtn" class="p-2 rounded-lg bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-400 hover:text-green-600 dark:hover:text-lime-400 hover:border-green-600 dark:hover:border-lime-400">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="mapsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        <div id="mapsList" class="hidden"></div>
+    </main>
+
+<script>
+    // Toggle between showing images first or icons first
+    const SHOW_ICONS_FIRST = false; // Set to true to show icons first, false to show images first
+
+    const maps = [
+        { name: 'AlienAttack', difficulty: 'Medium', wr: '1:04.95', runs: 847, color: 'from-purple-500 to-indigo-600', desc: 'Battle through alien territory', holder: 'coes', date: '8/17/24', version: '1.20', bounty: 'None', image: 'img/alienattack.png',  },
+        { name: 'Bandicoot', difficulty: 'Medium', wr: '1:14.65', runs: 923, color: 'from-orange-400 to-red-500', desc: 'Jump through jungle obstacles', holder: 'coes', date: '1/20/25', version: '1.8', bounty: 'None' },
+        { name: 'BiomeBlitz', difficulty: 'Hard', wr: '2:44.35', runs: 1543, color: 'from-green-400 to-emerald-600', desc: 'Race through diverse biomes', holder: 'coes', date: '6/25/23', version: '1.8', bounty: '$20' },
+        { name: 'Cave', difficulty: 'Medium', wr: '1:49.65', runs: 1234, color: 'from-gray-600 to-gray-800', desc: 'Navigate underground caverns', holder: 'coes', date: '10/14/23', version: '1.8', bounty: 'None' },
+        { name: 'Circus', difficulty: 'Medium', wr: '1:26.90', runs: 612, color: 'from-red-400 to-pink-500', desc: 'Perform acrobatic jumps', holder: 'coes', date: '1/11/25', version: '1.8', bounty: 'None' },
+        { name: 'FunkyTown', difficulty: 'Medium', wr: '1:24.10', runs: 891, color: 'from-purple-400 to-pink-500', desc: 'Groove through the city', holder: 'coes', date: '12/27/24', version: '1.8', bounty: 'None', image: 'img/funkytown-ai.png' },
+        { name: 'Halloween', difficulty: 'Medium', wr: '1:26.75', runs: 756, color: 'from-orange-500 to-red-600', desc: 'Spooky seasonal challenge', holder: 'coes', date: '12/23/24', version: '1.8', bounty: 'None', image: 'img/halloween-ai.png', imagePosition: 'top' },
+        { name: 'Harbor', difficulty: 'Medium', wr: '1:38.80', runs: 1089, color: 'from-blue-400 to-cyan-500', desc: 'Jump across the docks', holder: 'coes', date: '8/14/24', version: '1.20', bounty: 'None', image: 'img/harbor.png',  },
+        { name: 'Island', difficulty: 'Hard', wr: '2:56.05', runs: 734, color: 'from-cyan-400 to-blue-500', desc: 'Explore tropical parkour', holder: 'coes', date: '12/28/24', version: '1.8', bounty: 'None', image: 'img/island.png',  },
+        { name: 'Mario', difficulty: 'Easy', wr: '0:54.25', runs: 1876, color: 'from-red-500 to-orange-500', desc: 'Classic platforming action', holder: 'coes', date: '8/13/24', version: '1.20', bounty: 'None', image: 'img/mario.png', imagePosition: 'top'   },
+        { name: 'MesaBlitz', difficulty: 'Medium', wr: '1:54.60', runs: 945, color: 'from-orange-400 to-red-500', desc: 'Sprint through desert cliffs', holder: 'coes', date: '12/27/24', version: '1.20', bounty: 'None' },
+        { name: 'Monopoly', difficulty: 'Hard', wr: '2:14.35', runs: 1123, color: 'from-green-500 to-emerald-600', desc: 'Race around the board', holder: 'coes', date: '12/28/23', version: '1.8', bounty: 'None', image: 'img/monopoly.png',imagePosition: 'top'   },
+        { name: 'PrisonBreak', difficulty: 'Hard', wr: '2:17.25', runs: 823, color: 'from-gray-500 to-gray-700', desc: 'Escape the facility', holder: 'coes', date: '12/26/24', version: '1.8', bounty: 'None', image: 'img/prison-ai.png', },
+        { name: 'SnowVille', difficulty: 'Medium', wr: '1:29.40', runs: 967, color: 'from-cyan-300 to-blue-400', desc: 'Winter wonderland parkour', holder: 'coes', date: '12/28/24', version: '1.8', bounty: 'None', image: 'img/snowville.png',  },
+        { name: 'SpaceJam', difficulty: 'Hard', wr: '2:41.20', runs: 712, color: 'from-indigo-500 to-purple-600', desc: 'Jump to the stars', holder: 'coes', date: '8/6/24', version: '1.8', bounty: 'None' },
+        { name: 'Temple', difficulty: 'Easy', wr: '0:49.95', runs: 1534, color: 'from-yellow-500 to-orange-500', desc: 'Ancient ruins adventure', holder: 'coes', date: '1/6/25', version: '1.8', bounty: 'None', image: 'img/temple.png',  },
+        { name: 'Winter', difficulty: 'Medium', wr: '1:25.60', runs: 834, color: 'from-blue-300 to-cyan-400', desc: 'Snowy mountain slopes', holder: 'coes', date: '12/23/24', version: '1.20', bounty: 'None', image: 'img/winter-ai.png', },
+        { name: 'Wuhu', difficulty: 'Medium', wr: '1:50.35', runs: 1045, color: 'from-green-400 to-teal-500', desc: 'Island hopping challenge', holder: 'coes', date: '5/16/24', version: '1.8', bounty: 'None' },
+    ];
+
+    function renderGrid(mapsToRender) {
+        const grid = document.getElementById('mapsGrid');
+        grid.innerHTML = mapsToRender.map(map => {
+            let diffColor = map.difficulty === 'Easy' ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400' :
+                            map.difficulty === 'Medium' ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400' :
+                            'bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-400';
+            
+            return `
+                <div class="map-card bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-lg hover:border-green-500 dark:hover:border-lime-400 transition cursor-pointer" onclick="window.location.href='map-leaderboard.html'">
+                    <div class="h-40 bg-gradient-to-br ${map.color} flex items-center justify-center relative overflow-hidden">
+                        ${map.image ? 
+                            `<!-- Image layer -->
+                             <div class="map-card-image absolute inset-0 w-full h-full">
+                                 <img src="${map.image}" alt="${map.name}" class="w-full h-full object-cover" style="object-position: ${map.imagePosition || 'center'}">
+                                 <div class="absolute inset-0 bg-gradient-to-br ${map.color} opacity-60"></div>
+                             </div>
+                             <!-- Icon layer -->
+                             <div class="map-card-icon absolute inset-0 w-full h-full bg-gradient-to-br ${map.color} flex items-center justify-center">
+                                 <svg class="w-16 h-16 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path>
+                                 </svg>
+                             </div>` : 
+                            `<svg class="w-16 h-16 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path>
+                            </svg>`
+                        }
+                    </div>
+                    <div class="p-5">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-xl font-bold text-gray-900 dark:text-white">${map.name}</h3>
+                            <span class="px-2 py-1 ${diffColor} text-xs font-semibold rounded">${map.difficulty}</span>
+                        </div>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">${map.desc}</p>
+                        <div class="flex items-center justify-between text-sm">
+                            <div class="flex items-center space-x-4 text-gray-600 dark:text-gray-400">
+                                <span>🏆 WR: ${map.wr}</span>
+                                <span>👥 ${map.runs.toLocaleString()} runs</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    function renderList(mapsToRender) {
+        const list = document.getElementById('mapsList');
+        list.innerHTML = `
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead class="bg-gray-50 dark:bg-gray-700/50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Map</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">WR Holder</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Time</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Date</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Version</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Bounty</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Video</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+                            ${mapsToRender.map(map => {
+                                let diffColor = map.difficulty === 'Easy' ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400' :
+                                                map.difficulty === 'Medium' ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400' :
+                                                'bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-400';
+                                let bountyColor = map.bounty !== 'None' ? 'text-green-600 dark:text-green-400 font-semibold' : 'text-gray-600 dark:text-gray-400';
+                                
+                                return `
+                                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition cursor-pointer" onclick="window.location.href='map-leaderboard.html'">
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="flex items-center space-x-2">
+                                                <span class="font-semibold text-gray-900 dark:text-white">${map.name}</span>
+                                                <span class="px-2 py-1 ${diffColor} text-xs font-semibold rounded">${map.difficulty}</span>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <span class="font-medium text-gray-900 dark:text-white">${map.holder}</span>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <span class="text-lg font-bold bg-gradient-to-r from-green-500 to-lime-400 bg-clip-text text-transparent">${map.wr}</span>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-gray-600 dark:text-gray-400">${map.date}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <span class="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs font-medium rounded">${map.version}</span>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap ${bountyColor}">${map.bounty}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <a href="#" onclick="event.stopPropagation()" class="text-green-600 dark:text-lime-400 hover:text-green-700 dark:hover:text-lime-300 font-medium">View</a>
+                                        </td>
+                                    </tr>
+                                `;
+                            }).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        `;
+    }
+
+    renderGrid(maps);
+
+    // Apply icon-first mode if enabled
+    if (SHOW_ICONS_FIRST) {
+        document.getElementById('mapsGrid').classList.add('icon-first');
+    }
+
+    const gridViewBtn = document.getElementById('gridViewBtn');
+    const listViewBtn = document.getElementById('listViewBtn');
+    const mapsGrid = document.getElementById('mapsGrid');
+    const mapsList = document.getElementById('mapsList');
+
+    gridViewBtn.addEventListener('click', () => {
+        gridViewBtn.classList.add('bg-green-600', 'dark:bg-lime-400', 'text-white');
+        gridViewBtn.classList.remove('bg-white', 'dark:bg-gray-800', 'border', 'border-gray-300', 'dark:border-gray-600', 'text-gray-600', 'dark:text-gray-400');
+        listViewBtn.classList.remove('bg-green-600', 'dark:bg-lime-400', 'text-white');
+        listViewBtn.classList.add('bg-white', 'dark:bg-gray-800', 'border', 'border-gray-300', 'dark:border-gray-600', 'text-gray-600', 'dark:text-gray-400');
+        
+        mapsGrid.classList.remove('hidden');
+        mapsList.classList.add('hidden');
+    });
+
+    listViewBtn.addEventListener('click', () => {
+        listViewBtn.classList.add('bg-green-600', 'dark:bg-lime-400', 'text-white');
+        listViewBtn.classList.remove('bg-white', 'dark:bg-gray-800', 'border', 'border-gray-300', 'dark:border-gray-600', 'text-gray-600', 'dark:text-gray-400');
+        gridViewBtn.classList.remove('bg-green-600', 'dark:bg-lime-400', 'text-white');
+        gridViewBtn.classList.add('bg-white', 'dark:bg-gray-800', 'border', 'border-gray-300', 'dark:border-gray-600', 'text-gray-600', 'dark:text-gray-400');
+        
+        mapsGrid.classList.add('hidden');
+        mapsList.classList.remove('hidden');
+        renderList(maps);
+    });
+
+    const themeToggle = document.getElementById('themeToggle');
+    const html = document.documentElement;
+    const currentTheme = localStorage.getItem('theme') || 'light';
+    if (currentTheme === 'dark') html.classList.add('dark');
+    themeToggle.addEventListener('click', () => {
+        html.classList.toggle('dark');
+        localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+</script>
+</body>
+</html>

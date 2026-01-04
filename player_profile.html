@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speedrunner123 - WoodyRun Profile</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'wr-green': '#00ff00',
+                        'wr-lime': '#b4ff00',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
+    <!-- Header -->
+    <header class="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3">
+                    <img src="img/woodyrun-logo.png" alt="WR Logo" class="h-16 w-auto">
+                    <div>
+                        <h1 class="text-2xl font-bold bg-gradient-to-r from-green-500 to-lime-400 bg-clip-text text-transparent">WoodyRun</h1>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">Speedrun Leaderboards</p>
+                    </div>
+                </div>
+
+                <!-- Navigation & Search -->
+                <div class="hidden md:flex items-center space-x-6">
+                    <nav class="flex items-center space-x-6">
+                        <a href="overall.html" class="text-gray-700 dark:text-gray-200 hover:text-green-500 dark:hover:text-lime-400 font-medium transition">Overall</a>
+                        <a href="maps.html" class="text-gray-700 dark:text-gray-200 hover:text-green-500 dark:hover:text-lime-400 font-medium transition">Maps</a>
+                        <a href="players.html" class="text-green-500 dark:text-lime-400 font-medium">Players</a>
+                        <a href="seasons.html" class="text-gray-700 dark:text-gray-200 hover:text-green-500 dark:hover:text-lime-400 font-medium transition">Seasons</a>
+                    </nav>
+                    
+                    <!-- Search Bar -->
+                    <div class="relative">
+                        <input type="text" placeholder="Search players..." class="pl-10 pr-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-green-500 focus:border-transparent w-64">
+                        <svg class="w-5 h-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Dark Mode Toggle -->
+                <button id="themeToggle" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition">
+                    <svg id="sunIcon" class="w-6 h-6 text-gray-800 dark:text-gray-200 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                    </svg>
+                    <svg id="moonIcon" class="w-6 h-6 text-gray-800 dark:text-gray-200 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- Player Header -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden mb-6">
+            <div class="bg-gradient-to-r from-green-500 to-lime-400 h-32"></div>
+            <div class="px-6 pb-6">
+                <div class="flex flex-col md:flex-row md:items-end md:justify-between -mt-16 md:-mt-12">
+                    <div class="flex items-end space-x-4">
+                        <img src="https://mc-heads.net/avatar/Notch/128" alt="Speedrunner123" class="w-32 h-32 rounded-xl border-4 border-white dark:border-gray-800 shadow-lg">
+                        <div class="pb-2">
+                            <h2 class="text-3xl font-bold text-gray-900 dark:text-white">Speedrunner123</h2>
+                            <p class="text-gray-600 dark:text-gray-400">Member since Jan 2024</p>
+                        </div>
+                    </div>
+                    <div class="mt-4 md:mt-0 flex items-center space-x-2">
+                        <span class="px-4 py-2 bg-gradient-to-r from-yellow-400 to-yellow-600 text-white font-bold rounded-lg shadow-sm">
+                            Rank #1
+                        </span>
+                        <span class="px-4 py-2 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 font-semibold rounded-lg">
+                            Season 3
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4 mb-6">
+            <div class="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm border border-gray-200 dark:border-gray-700">
+                <p class="text-xs text-gray-600 dark:text-gray-400 mb-1">Total Points</p>
+                <p class="text-2xl font-bold bg-gradient-to-r from-green-500 to-lime-400 bg-clip-text text-transparent">2,847</p>
+            </div>
+            <div class="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm border border-gray-200 dark:border-gray-700">
+                <p class="text-xs text-gray-600 dark:text-gray-400 mb-1">World Records</p>
+                <p class="text-2xl font-bold text-gray-900 dark:text-white">12</p>
+            </div>
+            <div class="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm border border-gray-200 dark:border-gray-700">
+                <p class="text-xs text-gray-600 dark:text-gray-400 mb-1">Maps Completed</p>
+                <p class="text-2xl font-bold text-gray-900 dark:text-white">18/18</p>
+            </div>
+            <div class="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm border border-gray-200 dark:border-gray-700">
+                <p class="text-xs text-gray-600 dark:text-gray-400 mb-1">Season Wins</p>
+                <p class="text-2xl font-bold text-yellow-600 dark:text-yellow-400">2</p>
+            </div>
+            <div class="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm border border-gray-200 dark:border-gray-700">
+                <p class="text-xs text-gray-600 dark:text-gray-400 mb-1">Playtime</p>
+                <p class="text-2xl font-bold text-gray-900 dark:text-white">47h</p>
+            </div>
+            <div class="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm border border-gray-200 dark:border-gray-700">
+                <p class="text-xs text-gray-600 dark:text-gray-400 mb-1">Total Jumps</p>
+                <p class="text-2xl font-bold text-gray-900 dark:text-white">18.2k</p>
+            </div>
+            <div class="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm border border-gray-200 dark:border-gray-700">
+                <p class="text-xs text-gray-600 dark:text-gray-400 mb-1">Deaths</p>
+                <p class="text-2xl font-bold text-red-600 dark:text-red-400">1,384</p>
+            </div>
+        </div>
+
+        <!-- Races Coming Soon Banner -->
+        <div class="bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl p-4 mb-6 shadow-sm">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="text-white font-bold">Racing Mode Coming Soon!</p>
+                        <p class="text-white/80 text-sm">Compete head-to-head with other players</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Season Selector -->
+        <div class="flex items-center justify-between mb-4">
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white">Personal Records</h3>
+            <select class="px-4 py-2 rounded-lg bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white font-medium focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                <option>Season 3 (Current)</option>
+                <option>Season 2</option>
+                <option>Season 1</option>
+                <option>All Time</option>
+            </select>
+        </div>
+
+        <!-- Personal Records Table -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden mb-6">
+            <div class="overflow-x-auto">
+                <table class="w-full">
+                    <thead class="bg-gray-50 dark:bg-gray-700/50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Map</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Personal Best</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Rank</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">vs WR</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Date</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Splits</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+                        <!-- Map 1 - WR Holder -->
+                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition">
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center space-x-2">
+                                    <span class="font-medium text-gray-900 dark:text-white">Desert Sprint</span>
+                                    <span class="px-2 py-1 text-xs bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400 rounded font-semibold">WR</span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="text-lg font-bold text-gray-900 dark:text-white">1:23.45</span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-yellow-400 to-yellow-600 text-white font-bold text-sm">1</span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="text-green-600 dark:text-green-400 font-medium">—</span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-gray-600 dark:text-gray-400">Dec 28, 2024</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <button class="text-green-600 dark:text-lime-400 hover:text-green-700 dark:hover:text-lime-300 font-medium text-sm" onclick="toggleSplits('splits1')">View</button>
+                            </td>
+                        </tr>
+                        <tr id="splits1" class="hidden bg-gray-50 dark:bg-gray-700/30">
+                            <td colspan="6" class="px-6 py-4">
+                                <div class="flex items-center space-x-8">
+                                    <div>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400 mb-1">Checkpoint 1</p>
+                                        <p class="font-mono text-sm font-medium text-gray-900 dark:text-white">0:18.23</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400 mb-1">Checkpoint 2</p>
+                                        <p class="font-mono text-sm font-medium text-gray-900 dark:text-white">0:42.81</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400 mb-1">Checkpoint 3</p>
+                                        <p class="font-mono text-sm font-medium text-gray-900 dark:text-white">1:08.12</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400 mb-1">Finish</p>
+                                        <p class="font-mono text-sm font-medium text-green-600 dark:text-green-400">1:23.45</p>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <!-- Map 2 - Top 3 -->
+                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition">
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="font-medium text-gray-900 dark:text-white">Ice Tower</span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="text-lg font-bold text-gray-900 dark:text-white">2:15.67</span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-gray-300 to-gray-400 text-white font-bold text-sm">2</span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="text-orange-600 dark:text-orange-400 font-medium">+0.34s</span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-gray-600 dark:text-gray-400">Dec 30, 2024</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <button class="text-green-600 dark:text-lime-400 hover:text-green-700 dark:hover:text-lime-300 font-medium text-sm" onclick="toggleSplits('splits2')">View</button>
+                            </td>
+                        </tr>
+                        <tr id="splits2" class="hidden bg-gray-50 dark:bg-gray-700/30">
+                            <td colspan="6" class="px-6 py-4">
+                                <div class="flex items-center space-x-8">
+                                    <div>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400 mb-1">Checkpoint 1</p>
+                                        <p class="font-mono text-sm font-medium text-gray-900 dark:text-white">0:31.45</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400 mb-1">Checkpoint 2</p>
+                                        <p class="font-mono text-sm font-medium text-gray-900 dark:text-white">1:12.89</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400 mb-1">Checkpoint 3</p>
+                                        <p class="font-mono text-sm font-medium text-gray-900 dark:text-white">1:48.23</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400 mb-1">Finish</p>
+                                        <p class="font-mono text-sm font-medium text-green-600 dark:text-green-400">2:15.67</p>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <!-- Map 3 - Outside Top 3 -->
+                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition">
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="font-medium text-gray-900 dark:text-white">Jungle Jump</span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="text-lg font-bold text-gray-900 dark:text-white">1:45.89</span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="text-gray-600 dark:text-gray-400 font-medium">5</span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="text-red-600 dark:text-red-400 font-medium">+2.14s</span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-gray-600 dark:text-gray-400">Jan 1, 2025</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <button class="text-green-600 dark:text-lime-400 hover:text-green-700 dark:hover:text-lime-300 font-medium text-sm" onclick="toggleSplits('splits3')">View</button>
+                            </td>
+                        </tr>
+                        <tr id="splits3" class="hidden bg-gray-50 dark:bg-gray-700/30">
+                            <td colspan="6" class="px-6 py-4">
+                                <div class="flex items-center space-x-8">
+                                    <div>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400 mb-1">Checkpoint 1</p>
+                                        <p class="font-mono text-sm font-medium text-gray-900 dark:text-white">0:28.91</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400 mb-1">Checkpoint 2</p>
+                                        <p class="font-mono text-sm font-medium text-gray-900 dark:text-white">0:59.34</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400 mb-1">Checkpoint 3</p>
+                                        <p class="font-mono text-sm font-medium text-gray-900 dark:text-white">1:24.67</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400 mb-1">Finish</p>
+                                        <p class="font-mono text-sm font-medium text-green-600 dark:text-green-400">1:45.89</p>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <!-- Map 4 -->
+                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition">
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center space-x-2">
+                                    <span class="font-medium text-gray-900 dark:text-white">Nether Rush</span>
+                                    <span class="px-2 py-1 text-xs bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400 rounded font-semibold">WR</span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="text-lg font-bold text-gray-900 dark:text-white">0:58.23</span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-yellow-400 to-yellow-600 text-white font-bold text-sm">1</span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="text-green-600 dark:text-green-400 font-medium">—</span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-gray-600 dark:text-gray-400">Dec 25, 2024</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <button class="text-green-600 dark:text-lime-400 hover:text-green-700 dark:hover:text-lime-300 font-medium text-sm" onclick="toggleSplits('splits4')">View</button>
+                            </td>
+                        </tr>
+                        <tr id="splits4" class="hidden bg-gray-50 dark:bg-gray-700/30">
+                            <td colspan="6" class="px-6 py-4">
+                                <div class="flex items-center space-x-8">
+                                    <div>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400 mb-1">Checkpoint 1</p>
+                                        <p class="font-mono text-sm font-medium text-gray-900 dark:text-white">0:15.67</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400 mb-1">Checkpoint 2</p>
+                                        <p class="font-mono text-sm font-medium text-gray-900 dark:text-white">0:38.92</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400 mb-1">Finish</p>
+                                        <p class="font-mono text-sm font-medium text-green-600 dark:text-green-400">0:58.23</p>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <!-- Map 5 -->
+                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition">
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="font-medium text-gray-900 dark:text-white">Sky Parkour</span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="text-lg font-bold text-gray-900 dark:text-white">3:12.45</span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-orange-400 to-orange-600 text-white font-bold text-sm">3</span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="text-orange-600 dark:text-orange-400 font-medium">+1.78s</span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-gray-600 dark:text-gray-400">Dec 29, 2024</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <button class="text-green-600 dark:text-lime-400 hover:text-green-700 dark:hover:text-lime-300 font-medium text-sm" onclick="toggleSplits('splits5')">View</button>
+                            </td>
+                        </tr>
+                        <tr id="splits5" class="hidden bg-gray-50 dark:bg-gray-700/30">
+                            <td colspan="6" class="px-6 py-4">
+                                <div class="flex items-center space-x-8">
+                                    <div>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400 mb-1">Checkpoint 1</p>
+                                        <p class="font-mono text-sm font-medium text-gray-900 dark:text-white">0:45.23</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400 mb-1">Checkpoint 2</p>
+                                        <p class="font-mono text-sm font-medium text-gray-900 dark:text-white">1:34.56</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400 mb-1">Checkpoint 3</p>
+                                        <p class="font-mono text-sm font-medium text-gray-900 dark:text-white">2:28.91</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400 mb-1">Finish</p>
+                                        <p class="font-mono text-sm font-medium text-green-600 dark:text-green-400">3:12.45</p>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
+            <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Recent Activity</h3>
+            </div>
+            <div class="divide-y divide-gray-200 dark:divide-gray-700">
+                <div class="px-6 py-4 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 bg-yellow-100 dark:bg-yellow-900/30 rounded-lg flex items-center justify-center">
+                                <svg class="w-5 h-5 text-yellow-600 dark:text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <p class="font-medium text-gray-900 dark:text-white">New World Record!</p>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">Set WR on <span class="font-medium">Desert Sprint</span> with 1:23.45</p>
+                            </div>
+                        </div>
+                        <span class="text-sm text-gray-500 dark:text-gray-400">2 days ago</span>
+                    </div>
+                </div>
+
+                <div class="px-6 py-4 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center">
+                                <svg class="w-5 h-5 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <p class="font-medium text-gray-900 dark:text-white">Personal Best</p>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">Improved time on <span class="font-medium">Ice Tower</span> to 2:15.67</p>
+                            </div>
+                        </div>
+                        <span class="text-sm text-gray-500 dark:text-gray-400">3 days ago</span>
+                    </div>
+                </div>
+
+                <div class="px-6 py-4 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center">
+                                <svg class="w-5 h-5 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <p class="font-medium text-gray-900 dark:text-white">Map Completed</p>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">First completion of <span class="font-medium">Jungle Jump</span></p>
+                            </div>
+                        </div>
+                        <span class="text-sm text-gray-500 dark:text-gray-400">5 days ago</span>
+                    </div>
+                </div>
+
+                <div class="px-6 py-4 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 bg-yellow-100 dark:bg-yellow-900/30 rounded-lg flex items-center justify-center">
+                                <svg class="w-5 h-5 text-yellow-600 dark:text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <p class="font-medium text-gray-900 dark:text-white">New World Record!</p>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">Set WR on <span class="font-medium">Nether Rush</span> with 0:58.23</p>
+                            </div>
+                        </div>
+                        <span class="text-sm text-gray-500 dark:text-gray-400">1 week ago</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Dark mode toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const html = document.documentElement;
+
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        if (currentTheme === 'dark') {
+            html.classList.add('dark');
+        }
+
+        themeToggle.addEventListener('click', () => {
+            html.classList.toggle('dark');
+            const theme = html.classList.contains('dark') ? 'dark' : 'light';
+            localStorage.setItem('theme', theme);
+        });
+
+        // Toggle splits display
+        function toggleSplits(id) {
+            const splitsRow = document.getElementById(id);
+            splitsRow.classList.toggle('hidden');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seasons - WoodyRun Leaderboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'wr-green': '#00ff00',
+                        'wr-lime': '#b4ff00',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
+    <!-- Header -->
+    <header class="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3">
+                    <img src="img/woodyrun-logo.png" alt="WR Logo" class="h-16 w-auto">
+                    <div>
+                        <h1 class="text-2xl font-bold bg-gradient-to-r from-green-500 to-lime-400 bg-clip-text text-transparent">WoodyRun</h1>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">Speedrun Leaderboards</p>
+                    </div>
+                </div>
+
+                <!-- Navigation & Search -->
+                <div class="hidden md:flex items-center space-x-6">
+                    <nav class="flex items-center space-x-6">
+                        <a href="overall.html" class="text-gray-700 dark:text-gray-200 hover:text-green-500 dark:hover:text-lime-400 font-medium transition">Overall</a>
+                        <a href="maps.html" class="text-gray-700 dark:text-gray-200 hover:text-green-500 dark:hover:text-lime-400 font-medium transition">Maps</a>
+                        <a href="players.html" class="text-gray-700 dark:text-gray-200 hover:text-green-500 dark:hover:text-lime-400 font-medium transition">Players</a>
+                        <a href="#" class="text-green-500 dark:text-lime-400 font-medium">Seasons</a>
+                    </nav>
+                    
+                    <!-- Search Bar -->
+                    <div class="relative">
+                        <input type="text" placeholder="Search players & maps..." class="pl-10 pr-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-green-500 focus:border-transparent w-64">
+                        <svg class="w-5 h-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Dark Mode Toggle -->
+                <button id="themeToggle" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition">
+                    <svg id="sunIcon" class="w-6 h-6 text-gray-800 dark:text-gray-200 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                    </svg>
+                    <svg id="moonIcon" class="w-6 h-6 text-gray-800 dark:text-gray-200 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- Page Header -->
+        <div class="mb-8">
+            <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">Seasons Archive</h2>
+            <p class="text-gray-600 dark:text-gray-400">Browse past and current competitive seasons</p>
+        </div>
+
+        <!-- Current Season -->
+        <div class="mb-8">
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center">
+                <span class="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></span>
+                Current Season
+            </h3>
+            <div class="bg-gradient-to-br from-green-500 to-lime-400 rounded-xl p-1 shadow-lg">
+                <div class="bg-white dark:bg-gray-800 rounded-lg p-6">
+                    <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+                        <div class="mb-4 md:mb-0">
+                            <div class="flex items-center space-x-3 mb-2">
+                                <h4 class="text-2xl font-bold text-gray-900 dark:text-white">Season 3</h4>
+                                <span class="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-sm font-semibold rounded-full">Active</span>
+                            </div>
+                            <p class="text-gray-600 dark:text-gray-400 mb-3">Dec 1, 2024 - Feb 28, 2025</p>
+                            <div class="flex items-center space-x-6 text-sm">
+                                <div>
+                                    <span class="text-gray-600 dark:text-gray-400">Time Remaining:</span>
+                                    <span class="ml-1 font-bold text-gray-900 dark:text-white">14 days</span>
+                                </div>
+                                <div>
+                                    <span class="text-gray-600 dark:text-gray-400">Active Players:</span>
+                                    <span class="ml-1 font-bold text-gray-900 dark:text-white">1,247</span>
+                                </div>
+                                <div>
+                                    <span class="text-gray-600 dark:text-gray-400">Total Runs:</span>
+                                    <span class="ml-1 font-bold text-gray-900 dark:text-white">18,492</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex flex-col space-y-2">
+                            <button class="px-6 py-3 bg-gradient-to-r from-green-500 to-lime-400 text-white font-semibold rounded-lg hover:shadow-lg transition">
+                                View Leaderboard
+                            </button>
+                            <p class="text-center text-sm text-gray-600 dark:text-gray-400">
+                                Current Leader: <span class="font-semibold text-gray-900 dark:text-white">Speedrunner123</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Past Seasons -->
+        <div>
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Past Seasons</h3>
+            <div class="space-y-4">
+                <!-- Season 2 -->
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6 hover:shadow-md transition cursor-pointer">
+                    <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+                        <div class="mb-4 md:mb-0">
+                            <div class="flex items-center space-x-3 mb-2">
+                                <h4 class="text-xl font-bold text-gray-900 dark:text-white">Season 2</h4>
+                                <span class="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-400 text-sm font-semibold rounded-full">Ended</span>
+                            </div>
+                            <p class="text-gray-600 dark:text-gray-400 mb-3">Sep 1, 2024 - Nov 30, 2024</p>
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                                <div>
+                                    <p class="text-gray-600 dark:text-gray-400">Champion</p>
+                                    <div class="flex items-center space-x-2 mt-1">
+                                        <img src="https://mc-heads.net/avatar/jeb_/24" alt="Champion" class="w-6 h-6 rounded">
+                                        <span class="font-semibold text-gray-900 dark:text-white">ProParkour</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <p class="text-gray-600 dark:text-gray-400">Total Players</p>
+                                    <p class="font-bold text-gray-900 dark:text-white mt-1">1,156</p>
+                                </div>
+                                <div>
+                                    <p class="text-gray-600 dark:text-gray-400">Total Runs</p>
+                                    <p class="font-bold text-gray-900 dark:text-white mt-1">16,834</p>
+                                </div>
+                                <div>
+                                    <p class="text-gray-600 dark:text-gray-400">Maps</p>
+                                    <p class="font-bold text-gray-900 dark:text-white mt-1">18</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <button class="px-6 py-2 bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white font-medium rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition">
+                                View Archive
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Top 3 Preview -->
+                    <div class="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+                        <p class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">Final Top 3</p>
+                        <div class="flex items-center space-x-6">
+                            <div class="flex items-center space-x-2">
+                                <span class="text-yellow-600 dark:text-yellow-400 font-bold">🥇</span>
+                                <img src="https://mc-heads.net/avatar/jeb_/24" alt="1st" class="w-6 h-6 rounded">
+                                <span class="text-sm font-medium text-gray-900 dark:text-white">ProParkour</span>
+                                <span class="text-sm text-gray-600 dark:text-gray-400">2,891 pts</span>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <span class="text-gray-400 font-bold">🥈</span>
+                                <img src="https://mc-heads.net/avatar/Notch/24" alt="2nd" class="w-6 h-6 rounded">
+                                <span class="text-sm font-medium text-gray-900 dark:text-white">Speedrunner123</span>
+                                <span class="text-sm text-gray-600 dark:text-gray-400">2,847 pts</span>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <span class="text-orange-600 dark:text-orange-400 font-bold">🥉</span>
+                                <img src="https://mc-heads.net/avatar/Dinnerbone/24" alt="3rd" class="w-6 h-6 rounded">
+                                <span class="text-sm font-medium text-gray-900 dark:text-white">JumpMaster</span>
+                                <span class="text-sm text-gray-600 dark:text-gray-400">2,734 pts</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Season 1 -->
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6 hover:shadow-md transition cursor-pointer">
+                    <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+                        <div class="mb-4 md:mb-0">
+                            <div class="flex items-center space-x-3 mb-2">
+                                <h4 class="text-xl font-bold text-gray-900 dark:text-white">Season 1</h4>
+                                <span class="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-400 text-sm font-semibold rounded-full">Ended</span>
+                            </div>
+                            <p class="text-gray-600 dark:text-gray-400 mb-3">Jan 1, 2024 - Aug 31, 2024</p>
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                                <div>
+                                    <p class="text-gray-600 dark:text-gray-400">Champion</p>
+                                    <div class="flex items-center space-x-2 mt-1">
+                                        <img src="https://mc-heads.net/avatar/Notch/24" alt="Champion" class="w-6 h-6 rounded">
+                                        <span class="font-semibold text-gray-900 dark:text-white">Speedrunner123</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <p class="text-gray-600 dark:text-gray-400">Total Players</p>
+                                    <p class="font-bold text-gray-900 dark:text-white mt-1">892</p>
+                                </div>
+                                <div>
+                                    <p class="text-gray-600 dark:text-gray-400">Total Runs</p>
+                                    <p class="font-bold text-gray-900 dark:text-white mt-1">12,456</p>
+                                </div>
+                                <div>
+                                    <p class="text-gray-600 dark:text-gray-400">Maps</p>
+                                    <p class="font-bold text-gray-900 dark:text-white mt-1">15</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <button class="px-6 py-2 bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white font-medium rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition">
+                                View Archive
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Top 3 Preview -->
+                    <div class="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+                        <p class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">Final Top 3</p>
+                        <div class="flex items-center space-x-6">
+                            <div class="flex items-center space-x-2">
+                                <span class="text-yellow-600 dark:text-yellow-400 font-bold">🥇</span>
+                                <img src="https://mc-heads.net/avatar/Notch/24" alt="1st" class="w-6 h-6 rounded">
+                                <span class="text-sm font-medium text-gray-900 dark:text-white">Speedrunner123</span>
+                                <span class="text-sm text-gray-600 dark:text-gray-400">2,134 pts</span>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <span class="text-gray-400 font-bold">🥈</span>
+                                <img src="https://mc-heads.net/avatar/Dinnerbone/24" alt="2nd" class="w-6 h-6 rounded">
+                                <span class="text-sm font-medium text-gray-900 dark:text-white">JumpMaster</span>
+                                <span class="text-sm text-gray-600 dark:text-gray-400">1,998 pts</span>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <span class="text-orange-600 dark:text-orange-400 font-bold">🥉</span>
+                                <img src="https://mc-heads.net/avatar/Grumm/24" alt="3rd" class="w-6 h-6 rounded">
+                                <span class="text-sm font-medium text-gray-900 dark:text-white">NinjaParkour</span>
+                                <span class="text-sm text-gray-600 dark:text-gray-400">1,876 pts</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Dark mode toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const html = document.documentElement;
+
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        if (currentTheme === 'dark') {
+            html.classList.add('dark');
+        }
+
+        themeToggle.addEventListener('click', () => {
+            html.classList.toggle('dark');
+            const theme = html.classList.contains('dark') ? 'dark' : 'light';
+            localStorage.setItem('theme', theme);
+        });
+    </script>
+</body>
+</html>

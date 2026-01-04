@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Players - WoodyRun Leaderboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'wr-green': '#00ff00',
+                        'wr-lime': '#b4ff00',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
+    <!-- Header -->
+    <header class="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3">
+                    <img src="img/woodyrun-logo.png" alt="WR Logo" class="h-16 w-auto">
+                    <div>
+                        <h1 class="text-2xl font-bold bg-gradient-to-r from-green-500 to-lime-400 bg-clip-text text-transparent">WoodyRun</h1>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">Speedrun Leaderboards</p>
+                    </div>
+                </div>
+
+                <!-- Navigation & Search -->
+                <div class="hidden md:flex items-center space-x-6">
+                    <nav class="flex items-center space-x-6">
+                        <a href="overall.html" class="text-gray-700 dark:text-gray-200 hover:text-green-500 dark:hover:text-lime-400 font-medium transition">Overall</a>
+                        <a href="maps.html" class="text-gray-700 dark:text-gray-200 hover:text-green-500 dark:hover:text-lime-400 font-medium transition">Maps</a>
+                        <a href="#" class="text-green-500 dark:text-lime-400 font-medium">Players</a>
+                        <a href="seasons.html" class="text-gray-700 dark:text-gray-200 hover:text-green-500 dark:hover:text-lime-400 font-medium transition">Seasons</a>
+                    </nav>
+                    
+                    <!-- Search Bar -->
+                    <div class="relative">
+                        <input type="text" id="playerSearch" placeholder="Search players & maps..." class="pl-10 pr-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-green-500 focus:border-transparent w-64">
+                        <svg class="w-5 h-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Dark Mode Toggle -->
+                <button id="themeToggle" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition">
+                    <svg id="sunIcon" class="w-6 h-6 text-gray-800 dark:text-gray-200 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                    </svg>
+                    <svg id="moonIcon" class="w-6 h-6 text-gray-800 dark:text-gray-200 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- Page Header -->
+        <div class="mb-6">
+            <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">Player Directory</h2>
+            <p class="text-gray-600 dark:text-gray-400">Browse and search all WoodyRun speedrunners</p>
+        </div>
+
+        <!-- Filters Section -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6 mb-6">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Filters</h3>
+                <button id="resetFilters" class="text-sm text-green-600 dark:text-lime-400 hover:text-green-700 dark:hover:text-lime-300 font-medium">Reset All</button>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <!-- Season Filter -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Season</label>
+                    <select id="seasonFilter" class="w-full px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                        <option value="all">All Seasons</option>
+                        <option value="3" selected>Season 3 (Current)</option>
+                        <option value="2">Season 2</option>
+                        <option value="1">Season 1</option>
+                    </select>
+                </div>
+
+                <!-- Rank Range Filter -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Rank Range</label>
+                    <select id="rankFilter" class="w-full px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                        <option value="all">All Ranks</option>
+                        <option value="1-10">Top 10</option>
+                        <option value="11-50">11-50</option>
+                        <option value="51-100">51-100</option>
+                        <option value="101+">101+</option>
+                    </select>
+                </div>
+
+                <!-- World Records Filter -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">World Records</label>
+                    <select id="wrFilter" class="w-full px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                        <option value="all">Any Amount</option>
+                        <option value="1+">1+ Records</option>
+                        <option value="5+">5+ Records</option>
+                        <option value="10+">10+ Records</option>
+                    </select>
+                </div>
+
+                <!-- Sort By Filter -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Sort By</label>
+                    <select id="sortFilter" class="w-full px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                        <option value="rank">Rank (Highest)</option>
+                        <option value="points">Points (Highest)</option>
+                        <option value="records">Most Records</option>
+                        <option value="playtime">Most Playtime</option>
+                        <option value="recent">Recently Active</option>
+                        <option value="name">Name (A-Z)</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Advanced Filters Toggle -->
+            <div class="mt-4">
+                <button id="advancedToggle" class="text-sm text-gray-600 dark:text-gray-400 hover:text-green-600 dark:hover:text-lime-400 font-medium flex items-center space-x-1">
+                    <span>Show Advanced Filters</span>
+                    <svg class="w-4 h-4 transform transition-transform" id="advancedArrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+                
+                <div id="advancedFilters" class="hidden mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <!-- Completion Filter -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Maps Completed</label>
+                            <select class="w-full px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                                <option value="all">Any Amount</option>
+                                <option value="100">100% (All Maps)</option>
+                                <option value="75">75%+ Completed</option>
+                                <option value="50">50%+ Completed</option>
+                                <option value="25">25%+ Completed</option>
+                            </select>
+                        </div>
+
+                        <!-- Playtime Filter -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Playtime</label>
+                            <select class="w-full px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                                <option value="all">Any Amount</option>
+                                <option value="100+">100+ hours</option>
+                                <option value="50+">50+ hours</option>
+                                <option value="20+">20+ hours</option>
+                                <option value="10+">10+ hours</option>
+                            </select>
+                        </div>
+
+                        <!-- Season Winners Only -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Special</label>
+                            <div class="flex items-center space-x-4 pt-2">
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="checkbox" id="seasonWinnersOnly" class="w-4 h-4 text-green-600 rounded focus:ring-green-500 focus:ring-2">
+                                    <span class="text-sm text-gray-700 dark:text-gray-300">Season Winners Only</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Summary -->
+        <div class="flex items-center justify-between mb-4">
+            <p class="text-gray-600 dark:text-gray-400">
+                Showing <span class="font-semibold text-gray-900 dark:text-white">1,247</span> players
+            </p>
+            <div class="flex items-center space-x-2">
+                <button id="gridView" class="p-2 rounded-lg bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-400 hover:text-green-600 dark:hover:text-lime-400 hover:border-green-600 dark:hover:border-lime-400">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
+                    </svg>
+                </button>
+                <button id="listView" class="p-2 rounded-lg bg-green-600 dark:bg-lime-400 text-white">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Players List -->
+        <div id="playersContainer" class="space-y-3">
+            <!-- Player Card 1 -->
+            <div class="player-card bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-4 hover:shadow-md hover:border-green-500 dark:hover:border-lime-400 transition cursor-pointer" onclick="window.location.href='player-profile.html'">
+                <div class="player-card-content flex items-center justify-between">
+                    <div class="player-left flex items-center space-x-4">
+                        <span class="flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-br from-yellow-400 to-yellow-600 text-white font-bold">1</span>
+                        <img src="https://mc-heads.net/avatar/Notch/48" alt="Player" class="w-12 h-12 rounded-lg">
+                        <div>
+                            <h3 class="font-semibold text-gray-900 dark:text-white">Speedrunner123</h3>
+                            <div class="flex items-center space-x-3 text-sm text-gray-600 dark:text-gray-400">
+                                <span>2,847 pts</span>
+                                <span>•</span>
+                                <span class="text-yellow-600 dark:text-yellow-400">12 WRs</span>
+                                <span>•</span>
+                                <span>47h playtime</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="player-badges flex items-center space-x-2">
+                        <span class="px-3 py-1 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400 text-xs font-semibold rounded-full">2x Season Winner</span>
+                        <span class="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-xs font-semibold rounded-full">18/18 Maps</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Player Card 2 -->
+            <div class="player-card bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-4 hover:shadow-md hover:border-green-500 dark:hover:border-lime-400 transition cursor-pointer" onclick="window.location.href='player-profile.html'">
+                <div class="player-card-content flex items-center justify-between">
+                    <div class="player-left flex items-center space-x-4">
+                        <span class="flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-br from-gray-300 to-gray-400 text-white font-bold">2</span>
+                        <img src="https://mc-heads.net/avatar/jeb_/48" alt="Player" class="w-12 h-12 rounded-lg">
+                        <div>
+                            <h3 class="font-semibold text-gray-900 dark:text-white">ProParkour</h3>
+                            <div class="flex items-center space-x-3 text-sm text-gray-600 dark:text-gray-400">
+                                <span>2,691 pts</span>
+                                <span>•</span>
+                                <span class="text-yellow-600 dark:text-yellow-400">8 WRs</span>
+                                <span>•</span>
+                                <span>52h playtime</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="player-badges flex items-center space-x-2">
+                        <span class="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-xs font-semibold rounded-full">17/18 Maps</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Player Card 3 -->
+            <div class="player-card bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-4 hover:shadow-md hover:border-green-500 dark:hover:border-lime-400 transition cursor-pointer" onclick="window.location.href='player-profile.html'">
+                <div class="player-card-content flex items-center justify-between">
+                    <div class="player-left flex items-center space-x-4">
+                        <span class="flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-br from-orange-400 to-orange-600 text-white font-bold">3</span>
+                        <img src="https://mc-heads.net/avatar/Dinnerbone/48" alt="Player" class="w-12 h-12 rounded-lg">
+                        <div>
+                            <h3 class="font-semibold text-gray-900 dark:text-white">JumpMaster</h3>
+                            <div class="flex items-center space-x-3 text-sm text-gray-600 dark:text-gray-400">
+                                <span>2,534 pts</span>
+                                <span>•</span>
+                                <span class="text-yellow-600 dark:text-yellow-400">7 WRs</span>
+                                <span>•</span>
+                                <span>38h playtime</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="player-badges flex items-center space-x-2">
+                        <span class="px-3 py-1 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400 text-xs font-semibold rounded-full">1x Season Winner</span>
+                        <span class="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-xs font-semibold rounded-full">18/18 Maps</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Player Card 4 -->
+            <div class="player-card bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-4 hover:shadow-md hover:border-green-500 dark:hover:border-lime-400 transition cursor-pointer" onclick="window.location.href='player-profile.html'">
+                <div class="player-card-content flex items-center justify-between">
+                    <div class="player-left flex items-center space-x-4">
+                        <span class="text-gray-600 dark:text-gray-400 font-semibold w-10 text-center">4</span>
+                        <img src="https://mc-heads.net/avatar/Grumm/48" alt="Player" class="w-12 h-12 rounded-lg">
+                        <div>
+                            <h3 class="font-semibold text-gray-900 dark:text-white">NinjaParkour</h3>
+                            <div class="flex items-center space-x-3 text-sm text-gray-600 dark:text-gray-400">
+                                <span>2,389 pts</span>
+                                <span>•</span>
+                                <span class="text-yellow-600 dark:text-yellow-400">5 WRs</span>
+                                <span>•</span>
+                                <span>41h playtime</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="player-badges flex items-center space-x-2">
+                        <span class="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-xs font-semibold rounded-full">16/18 Maps</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Player Card 5 -->
+            <div class="player-card bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-4 hover:shadow-md hover:border-green-500 dark:hover:border-lime-400 transition cursor-pointer" onclick="window.location.href='player-profile.html'">
+                <div class="player-card-content flex items-center justify-between">
+                    <div class="player-left flex items-center space-x-4">
+                        <span class="text-gray-600 dark:text-gray-400 font-semibold w-10 text-center">5</span>
+                        <img src="https://mc-heads.net/avatar/Dream/48" alt="Player" class="w-12 h-12 rounded-lg">
+                        <div>
+                            <h3 class="font-semibold text-gray-900 dark:text-white">BlockRunner</h3>
+                            <div class="flex items-center space-x-3 text-sm text-gray-600 dark:text-gray-400">
+                                <span>2,156 pts</span>
+                                <span>•</span>
+                                <span class="text-yellow-600 dark:text-yellow-400">6 WRs</span>
+                                <span>•</span>
+                                <span>29h playtime</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="player-badges flex items-center space-x-2">
+                        <span class="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-xs font-semibold rounded-full">15/18 Maps</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pagination -->
+        <div class="flex items-center justify-center space-x-2 mt-8">
+            <button class="px-4 py-2 rounded-lg bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-400 hover:text-green-600 dark:hover:text-lime-400 hover:border-green-600 dark:hover:border-lime-400 transition disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                Previous
+            </button>
+            <button class="px-4 py-2 rounded-lg bg-green-600 dark:bg-lime-400 text-white font-medium">1</button>
+            <button class="px-4 py-2 rounded-lg bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-400 hover:text-green-600 dark:hover:text-lime-400 hover:border-green-600 dark:hover:border-lime-400 transition">2</button>
+            <button class="px-4 py-2 rounded-lg bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-400 hover:text-green-600 dark:hover:text-lime-400 hover:border-green-600 dark:hover:border-lime-400 transition">3</button>
+            <span class="px-4 py-2 text-gray-600 dark:text-gray-400">...</span>
+            <button class="px-4 py-2 rounded-lg bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-400 hover:text-green-600 dark:hover:text-lime-400 hover:border-green-600 dark:hover:border-lime-400 transition">25</button>
+            <button class="px-4 py-2 rounded-lg bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-400 hover:text-green-600 dark:hover:text-lime-400 hover:border-green-600 dark:hover:border-lime-400 transition">
+                Next
+            </button>
+        </div>
+    </main>
+
+    <script>
+        // Dark mode toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const html = document.documentElement;
+
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        if (currentTheme === 'dark') {
+            html.classList.add('dark');
+        }
+
+        themeToggle.addEventListener('click', () => {
+            html.classList.toggle('dark');
+            const theme = html.classList.contains('dark') ? 'dark' : 'light';
+            localStorage.setItem('theme', theme);
+        });
+
+        // Advanced filters toggle
+        const advancedToggle = document.getElementById('advancedToggle');
+        const advancedFilters = document.getElementById('advancedFilters');
+        const advancedArrow = document.getElementById('advancedArrow');
+
+        advancedToggle.addEventListener('click', () => {
+            advancedFilters.classList.toggle('hidden');
+            advancedArrow.classList.toggle('rotate-180');
+        });
+
+        // Reset filters
+        document.getElementById('resetFilters').addEventListener('click', () => {
+            document.getElementById('seasonFilter').value = '3';
+            document.getElementById('rankFilter').value = 'all';
+            document.getElementById('wrFilter').value = 'all';
+            document.getElementById('sortFilter').value = 'rank';
+            document.getElementById('seasonWinnersOnly').checked = false;
+            document.getElementById('playerSearch').value = '';
+        });
+
+        // View toggle (grid/list)
+        const gridView = document.getElementById('gridView');
+        const listView = document.getElementById('listView');
+        const playersContainer = document.getElementById('playersContainer');
+
+        gridView.addEventListener('click', () => {
+            // Update button styles
+            gridView.classList.add('bg-green-600', 'dark:bg-lime-400', 'text-white');
+            gridView.classList.remove('bg-white', 'dark:bg-gray-800', 'border', 'border-gray-300', 'dark:border-gray-600', 'text-gray-600', 'dark:text-gray-400');
+            listView.classList.remove('bg-green-600', 'dark:bg-lime-400', 'text-white');
+            listView.classList.add('bg-white', 'dark:bg-gray-800', 'border', 'border-gray-300', 'dark:border-gray-600', 'text-gray-600', 'dark:text-gray-400');
+            
+            // Change layout to grid
+            playersContainer.classList.remove('space-y-3');
+            playersContainer.classList.add('grid', 'grid-cols-1', 'md:grid-cols-2', 'lg:grid-cols-3', 'gap-4');
+            
+            // Update card styles for grid view
+            const cards = playersContainer.querySelectorAll('.player-card');
+            cards.forEach(card => {
+                card.classList.remove('p-4');
+                card.classList.add('p-6', 'flex-col', 'items-center', 'text-center');
+                
+                const content = card.querySelector('.player-card-content');
+                content.classList.remove('justify-between');
+                content.classList.add('flex-col', 'items-center', 'space-y-4');
+                
+                const leftSection = card.querySelector('.player-left');
+                leftSection.classList.add('flex-col', 'items-center', 'text-center');
+                
+                const badges = card.querySelector('.player-badges');
+                if (badges) {
+                    badges.classList.add('justify-center', 'flex-wrap');
+                }
+            });
+        });
+
+        listView.addEventListener('click', () => {
+            // Update button styles
+            listView.classList.add('bg-green-600', 'dark:bg-lime-400', 'text-white');
+            listView.classList.remove('bg-white', 'dark:bg-gray-800', 'border', 'border-gray-300', 'dark:border-gray-600', 'text-gray-600', 'dark:text-gray-400');
+            gridView.classList.remove('bg-green-600', 'dark:bg-lime-400', 'text-white');
+            gridView.classList.add('bg-white', 'dark:bg-gray-800', 'border', 'border-gray-300', 'dark:border-gray-600', 'text-gray-600', 'dark:text-gray-400');
+            
+            // Change layout to list
+            playersContainer.classList.remove('grid', 'grid-cols-1', 'md:grid-cols-2', 'lg:grid-cols-3', 'gap-4');
+            playersContainer.classList.add('space-y-3');
+            
+            // Update card styles for list view
+            const cards = playersContainer.querySelectorAll('.player-card');
+            cards.forEach(card => {
+                card.classList.remove('p-6', 'flex-col', 'items-center', 'text-center');
+                card.classList.add('p-4');
+                
+                const content = card.querySelector('.player-card-content');
+                content.classList.remove('flex-col', 'items-center', 'space-y-4');
+                content.classList.add('justify-between');
+                
+                const leftSection = card.querySelector('.player-left');
+                leftSection.classList.remove('flex-col', 'items-center', 'text-center');
+                
+                const badges = card.querySelector('.player-badges');
+                if (badges) {
+                    badges.classList.remove('justify-center', 'flex-wrap');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
