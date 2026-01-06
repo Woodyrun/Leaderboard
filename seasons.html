@@ -26,46 +26,90 @@
     </style>
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
-    <!-- Header -->
+<!-- Header -->
     <header class="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
         <div class="container mx-auto px-4 py-4">
             <div class="flex items-center justify-between">
                 <!-- Logo -->
                 <div class="flex items-center space-x-3">
-                    <img src="img/woodyrun-logo.png" alt="WR Logo" class="h-16 w-auto">
+                    <img src="img/woodyrun-logo.png" alt="WR Logo" class="h-12 sm:h-16 w-auto" onerror="this.style.display='none'">
                     <div>
-                        <h1 class="text-2xl font-bold bg-gradient-to-r from-green-500 to-lime-400 bg-clip-text text-transparent">WoodyRun</h1>
-                        <p class="text-xs text-gray-500 dark:text-gray-400">Speedrun Leaderboards</p>
+                        <h1 class="text-xl sm:text-2xl font-bold bg-gradient-to-r from-green-500 to-lime-400 bg-clip-text text-transparent">WoodyRun</h1>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 hidden sm:block">Speedrun Leaderboards</p>
                     </div>
                 </div>
 
-                <!-- Navigation & Search -->
-                <div class="hidden md:flex items-center space-x-6">
+                <!-- Desktop Navigation & Search -->
+                <div class="hidden lg:flex items-center space-x-6">
                     <nav class="flex items-center space-x-6">
                         <a href="index.html" class="text-gray-700 dark:text-gray-200 hover:text-green-500 dark:hover:text-lime-400 font-medium transition">Overall</a>
                         <a href="maps.html" class="text-gray-700 dark:text-gray-200 hover:text-green-500 dark:hover:text-lime-400 font-medium transition">Maps</a>
                         <a href="players.html" class="text-gray-700 dark:text-gray-200 hover:text-green-500 dark:hover:text-lime-400 font-medium transition">Players</a>
-                        <a href="#" class="text-green-500 dark:text-lime-400 font-medium">Seasons</a>
+                        <a href="seasons.html" class="text-green-500 dark:text-lime-400 font-medium">Seasons</a>
                     </nav>
                     
                     <!-- Search Bar -->
                     <div class="relative">
-                        <input type="text" placeholder="Search players & maps..." class="pl-10 pr-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-green-500 focus:border-transparent w-64">
-                        <svg class="w-5 h-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <input type="text" id="playerSearchInput" placeholder="Search players & maps..." class="pl-10 pr-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-green-500 focus:border-transparent w-64">
+                        <svg class="w-5 h-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                         </svg>
+                        
+                        <!-- Search Results Dropdown -->
+                        <div id="searchResults" class="hidden absolute top-full mt-2 w-80 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 max-h-96 overflow-y-auto z-50">
+                            <!-- Results will be inserted here -->
+                        </div>
                     </div>
                 </div>
 
-                <!-- Dark Mode Toggle -->
-                <button id="themeToggle" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition">
-                    <svg id="sunIcon" class="w-6 h-6 text-gray-800 dark:text-gray-200 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
-                    </svg>
-                    <svg id="moonIcon" class="w-6 h-6 text-gray-800 dark:text-gray-200 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
-                    </svg>
-                </button>
+                <!-- Mobile & Tablet - Dark Mode Toggle + Menu -->
+                <div class="flex items-center space-x-2">
+                    <!-- Dark Mode Toggle -->
+                    <button id="themeToggle" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition">
+                        <svg id="sunIcon" class="w-6 h-6 text-gray-800 dark:text-gray-200 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                        </svg>
+                        <svg id="moonIcon" class="w-6 h-6 text-gray-800 dark:text-gray-200 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                        </svg>
+                    </button>
+
+                    <!-- Mobile Menu Button -->
+                    <button id="mobileMenuToggle" class="lg:hidden p-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition">
+                        <svg id="menuIcon" class="w-6 h-6 text-gray-800 dark:text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                        <svg id="closeIcon" class="w-6 h-6 text-gray-800 dark:text-gray-200 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Menu (Hidden by default) -->
+            <div id="mobileMenu" class="hidden lg:hidden mt-4 pb-4 border-t border-gray-200 dark:border-gray-700 pt-4">
+                <!-- Mobile Search Bar -->
+                <div class="mb-4">
+                    <div class="relative">
+                        <input type="text" id="mobileSearchInput" placeholder="Search players & maps..." class="w-full pl-10 pr-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                        <svg class="w-5 h-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                    </div>
+                    
+                    <!-- Mobile Search Results -->
+                    <div id="mobileSearchResults" class="hidden mt-2 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 max-h-96 overflow-y-auto">
+                        <!-- Results will be inserted here -->
+                    </div>
+                </div>
+
+                <!-- Navigation Links -->
+                <div class="flex flex-col space-y-3">
+                    <a href="index.html" class="text-gray-700 dark:text-gray-200 hover:text-green-500 dark:hover:text-lime-400 font-medium transition py-2">Overall</a>
+                    <a href="maps.html" class="text-gray-700 dark:text-gray-200 hover:text-green-500 dark:hover:text-lime-400 font-medium transition py-2">Maps</a>
+                    <a href="players.html" class="text-gray-700 dark:text-gray-200 hover:text-green-500 dark:hover:text-lime-400 font-medium transition py-2">Players</a>
+                    <a href="seasons.html" class="text-gray-700 dark:text-gray-200 hover:text-green-500 dark:hover:text-lime-400 font-medium transition py-2">Seasons</a>
+                </div>
             </div>
         </div>
     </header>
@@ -256,11 +300,24 @@
         </div>
     </main>
 
-    <script>
+<script>
+        // Mobile menu toggle
+        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const menuIcon = document.getElementById('menuIcon');
+        const closeIcon = document.getElementById('closeIcon');
+
+        mobileMenuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            menuIcon.classList.toggle('hidden');
+            closeIcon.classList.toggle('hidden');
+        });
+
         // Dark mode toggle
         const themeToggle = document.getElementById('themeToggle');
         const html = document.documentElement;
 
+        // Check for saved theme preference or default to light mode
         const currentTheme = localStorage.getItem('theme') || 'light';
         if (currentTheme === 'dark') {
             html.classList.add('dark');
@@ -271,6 +328,413 @@
             const theme = html.classList.contains('dark') ? 'dark' : 'light';
             localStorage.setItem('theme', theme);
         });
-    </script>
+
+        // Counter animation function
+        function animateCounter(element, start, end, duration) {
+            const range = end - start;
+            const increment = range / (duration / 16); // 60fps
+            let current = start;
+            
+            const timer = setInterval(() => {
+                current += increment;
+                if ((increment > 0 && current >= end) || (increment < 0 && current <= end)) {
+                    current = end;
+                    clearInterval(timer);
+                }
+                element.textContent = Math.floor(current).toLocaleString() + ' points';
+            }, 16);
+        }
+
+        // Season selector - update titles dynamically with animations
+        const seasonSelector = document.getElementById('seasonSelector');
+        const pageTitle = document.getElementById('pageTitle');
+        const podiumTitle = document.getElementById('podiumTitle');
+        const tableTitle = document.getElementById('tableTitle');
+
+        // Mock data for different seasons
+        const seasonData = {
+            '3': {
+                players: [
+                    { name: 'Speedrunner123', points: 2847, avatar: 'Notch' },
+                    { name: 'ProParkour', points: 2691, avatar: 'jeb_' },
+                    { name: 'JumpMaster', points: 2534, avatar: 'Dinnerbone' }
+                ]
+            },
+            '2': {
+                players: [
+                    { name: 'ProParkour', points: 2891, avatar: 'jeb_' },
+                    { name: 'Speedrunner123', points: 2847, avatar: 'Notch' },
+                    { name: 'JumpMaster', points: 2734, avatar: 'Dinnerbone' }
+                ]
+            },
+            '1': {
+                players: [
+                    { name: 'Speedrunner123', points: 2134, avatar: 'Notch' },
+                    { name: 'JumpMaster', points: 1998, avatar: 'Dinnerbone' },
+                    { name: 'NinjaParkour', points: 1876, avatar: 'Grumm' }
+                ]
+            },
+            'alltime': {
+                players: [
+                    { name: 'Speedrunner123', points: 7828, avatar: 'Notch' },
+                    { name: 'ProParkour', points: 7419, avatar: 'jeb_' },
+                    { name: 'JumpMaster', points: 7266, avatar: 'Dinnerbone' }
+                ]
+            }
+        };
+
+        seasonSelector.addEventListener('change', (e) => {
+            const value = e.target.value;
+            let seasonText = '';
+            
+            if (value === 'alltime') {
+                seasonText = 'All Time';
+            } else if (value === '3') {
+                seasonText = 'Season 3';
+            } else if (value === '2') {
+                seasonText = 'Season 2';
+            } else if (value === '1') {
+                seasonText = 'Season 1';
+            }
+            
+            // Update titles
+            pageTitle.textContent = `Overall Leaderboard - ${seasonText}`;
+            podiumTitle.textContent = `Top 3 Players - ${seasonText}`;
+            tableTitle.textContent = `Top Players - ${seasonText}`;
+
+            // Get podium elements
+            const podiums = document.querySelectorAll('.podium-block');
+            const pointsElements = document.querySelectorAll('.podium-points');
+            const nameElements = document.querySelectorAll('.podium-name');
+            const avatarElements = document.querySelectorAll('.podium-avatar');
+
+            // Fade out avatars first
+            avatarElements.forEach(avatar => {
+                avatar.classList.remove('fade-in');
+            });
+
+            // Reset podium heights with animation
+            podiums.forEach((podium, index) => {
+                podium.style.transition = 'none';
+                podium.style.paddingTop = '0';
+                
+                setTimeout(() => {
+                    podium.style.transition = 'padding-top 0.8s cubic-bezier(0.34, 1.56, 0.64, 1)';
+                    
+                    // Set heights based on position (1st tallest, 2nd medium, 3rd shortest)
+                    if (index === 0) { // 2nd place (left)
+                        podium.style.paddingTop = '4rem';
+                    } else if (index === 1) { // 1st place (center)
+                        podium.style.paddingTop = '6rem';
+                    } else { // 3rd place (right)
+                        podium.style.paddingTop = '2rem';
+                    }
+                }, 50);
+            });
+
+            // Update data and animate counters
+            const data = seasonData[value];
+            if (data) {
+                // Update 2nd place (index 0)
+                setTimeout(() => {
+                    nameElements[0].textContent = data.players[1].name;
+                    avatarElements[0].src = `https://mc-heads.net/avatar/${data.players[1].avatar}/96`;
+                    animateCounter(pointsElements[0], 0, data.players[1].points, 1000);
+                    setTimeout(() => avatarElements[0].classList.add('fade-in'), 50);
+                }, 400);
+
+                // Update 1st place (index 1)
+                setTimeout(() => {
+                    nameElements[1].textContent = data.players[0].name;
+                    avatarElements[1].src = `https://mc-heads.net/avatar/${data.players[0].avatar}/96`;
+                    animateCounter(pointsElements[1], 0, data.players[0].points, 1000);
+                    setTimeout(() => avatarElements[1].classList.add('fade-in'), 50);
+                }, 200);
+
+                // Update 3rd place (index 2)
+                setTimeout(() => {
+                    nameElements[2].textContent = data.players[2].name;
+                    avatarElements[2].src = `https://mc-heads.net/avatar/${data.players[2].avatar}/96`;
+                    animateCounter(pointsElements[2], 0, data.players[2].points, 1000);
+                    setTimeout(() => avatarElements[2].classList.add('fade-in'), 50);
+                }, 600);
+            }
+        });
+
+        // Initialize podium animation on page load
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const podiums = document.querySelectorAll('.podium-block');
+                const pointsElements = document.querySelectorAll('.podium-points');
+                const avatarElements = document.querySelectorAll('.podium-avatar');
+
+                // Get initial Season 3 data
+                const data = seasonData['3'];
+
+                // Animate podium blocks rising
+                podiums.forEach((podium, index) => {
+                    podium.style.transition = 'none';
+                    podium.style.paddingTop = '0';
+                    
+                    setTimeout(() => {
+                        podium.style.transition = 'padding-top 0.8s cubic-bezier(0.34, 1.56, 0.64, 1)';
+                        
+                        if (index === 0) { // 2nd place
+                            podium.style.paddingTop = '4rem';
+                        } else if (index === 1) { // 1st place
+                            podium.style.paddingTop = '6rem';
+                        } else { // 3rd place
+                            podium.style.paddingTop = '2rem';
+                        }
+                    }, 50);
+                });
+
+                // Animate counters and fade in avatars
+                setTimeout(() => {
+                    animateCounter(pointsElements[1], 0, data.players[0].points, 1000);
+                    avatarElements[1].classList.add('fade-in');
+                }, 200);
+                
+                setTimeout(() => {
+                    animateCounter(pointsElements[0], 0, data.players[1].points, 1000);
+                    avatarElements[0].classList.add('fade-in');
+                }, 400);
+                
+                setTimeout(() => {
+                    animateCounter(pointsElements[2], 0, data.players[2].points, 1000);
+                    avatarElements[2].classList.add('fade-in');
+                }, 600);
+            }, 300);
+        });  
+
+        // Search functionality
+        const searchInput = document.getElementById('playerSearchInput');
+        const searchResults = document.getElementById('searchResults');
+        const mobileSearchInput = document.getElementById('mobileSearchInput');
+        const mobileSearchResults = document.getElementById('mobileSearchResults');
+
+        // Mock player database
+        const players = [
+            { name: 'Speedrunner123', rank: 1, points: 2847, avatar: 'Notch', records: 12 },
+            { name: 'ProParkour', rank: 2, points: 2691, avatar: 'jeb_', records: 8 },
+            { name: 'JumpMaster', rank: 3, points: 2534, avatar: 'Dinnerbone', records: 7 },
+            { name: 'NinjaParkour', rank: 4, points: 2389, avatar: 'Grumm', records: 5 },
+            { name: 'BlockRunner', rank: 5, points: 2156, avatar: 'Dream', records: 6 },
+            { name: 'SpeedDemon', rank: 6, points: 2043, avatar: 'Notch', records: 4 },
+            { name: 'ParkourPro', rank: 7, points: 1987, avatar: 'jeb_', records: 3 },
+            { name: 'QuickJumper', rank: 8, points: 1876, avatar: 'Dinnerbone', records: 2 },
+        ];
+
+        // Mock maps database
+        const maps = [
+            { name: 'AlienAttack', difficulty: 'Medium', wr: '1:04.95', runs: 847, color: 'from-purple-500 to-indigo-600' },
+            { name: 'Bandicoot', difficulty: 'Medium', wr: '1:14.65', runs: 923, color: 'from-orange-400 to-red-500' },
+            { name: 'BiomeBlitz', difficulty: 'Hard', wr: '2:44.35', runs: 1543, color: 'from-green-400 to-emerald-600' },
+            { name: 'Cave', difficulty: 'Medium', wr: '1:49.65', runs: 1234, color: 'from-gray-600 to-gray-800' },
+            { name: 'Circus', difficulty: 'Medium', wr: '1:26.90', runs: 612, color: 'from-red-400 to-pink-500' },
+            { name: 'FunkyTown', difficulty: 'Medium', wr: '1:24.10', runs: 891, color: 'from-purple-400 to-pink-500' },
+            { name: 'Halloween', difficulty: 'Medium', wr: '1:26.75', runs: 756, color: 'from-orange-500 to-red-600' },
+            { name: 'Harbor', difficulty: 'Medium', wr: '1:38.80', runs: 1089, color: 'from-blue-400 to-cyan-500' },
+            { name: 'Island', difficulty: 'Hard', wr: '2:56.05', runs: 734, color: 'from-cyan-400 to-blue-500' },
+            { name: 'Mario', difficulty: 'Easy', wr: '0:54.25', runs: 1876, color: 'from-red-500 to-orange-500' },
+            { name: 'MesaBlitz', difficulty: 'Medium', wr: '1:54.60', runs: 945, color: 'from-orange-400 to-red-500' },
+            { name: 'Monopoly', difficulty: 'Hard', wr: '2:14.35', runs: 1123, color: 'from-green-500 to-emerald-600' },
+            { name: 'PrisonBreak', difficulty: 'Hard', wr: '2:17.25', runs: 823, color: 'from-gray-500 to-gray-700' },
+            { name: 'SnowVille', difficulty: 'Medium', wr: '1:29.40', runs: 967, color: 'from-cyan-300 to-blue-400' },
+            { name: 'SpaceJam', difficulty: 'Hard', wr: '2:41.20', runs: 712, color: 'from-indigo-500 to-purple-600' },
+            { name: 'Temple', difficulty: 'Easy', wr: '0:49.95', runs: 1534, color: 'from-yellow-500 to-orange-500' },
+            { name: 'Winter', difficulty: 'Medium', wr: '1:25.60', runs: 834, color: 'from-blue-300 to-cyan-400' },
+            { name: 'Wuhu', difficulty: 'Medium', wr: '1:50.35', runs: 1045, color: 'from-green-400 to-teal-500' },
+        ];
+
+        // Shared search function
+        function performSearch(query, resultsContainer) {
+            if (query.length === 0) {
+                resultsContainer.classList.add('hidden');
+                return;
+            }
+
+            // Filter players and maps
+            const playerMatches = players.filter(player => 
+                player.name.toLowerCase().includes(query)
+            );
+            const mapMatches = maps.filter(map => 
+                map.name.toLowerCase().includes(query)
+            );
+
+            if (playerMatches.length === 0 && mapMatches.length === 0) {
+                resultsContainer.innerHTML = '<div class="p-4 text-center text-gray-500 dark:text-gray-400">No results found</div>';
+                resultsContainer.classList.remove('hidden');
+                return;
+            }
+
+            let resultsHTML = '';
+
+            // Add player results
+            if (playerMatches.length > 0) {
+                resultsHTML += '<div class="p-2 text-xs font-semibold text-gray-500 dark:text-gray-400 border-b border-gray-200 dark:border-gray-700">PLAYERS</div>';
+                resultsHTML += playerMatches.map(player => {
+                    let rankBadge = '';
+                    if (player.rank === 1) {
+                        rankBadge = '<span class="flex items-center justify-center w-6 h-6 rounded-full bg-gradient-to-br from-yellow-400 to-yellow-600 text-white font-bold text-xs">1</span>';
+                    } else if (player.rank === 2) {
+                        rankBadge = '<span class="flex items-center justify-center w-6 h-6 rounded-full bg-gradient-to-br from-gray-300 to-gray-400 text-white font-bold text-xs">2</span>';
+                    } else if (player.rank === 3) {
+                        rankBadge = '<span class="flex items-center justify-center w-6 h-6 rounded-full bg-gradient-to-br from-orange-400 to-orange-600 text-white font-bold text-xs">3</span>';
+                    } else {
+                        rankBadge = '<span class="text-gray-600 dark:text-gray-400 font-semibold text-sm w-6 text-center">' + player.rank + '</span>';
+                    }
+
+                    return `
+                        <div class="search-result-item flex items-center space-x-3 p-3 hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer transition" onclick="window.location.href='player-profile.html'">
+                            ${rankBadge}
+                            <img src="https://mc-heads.net/avatar/${player.avatar}/32" class="w-8 h-8 rounded">
+                            <div class="flex-1">
+                                <p class="font-semibold text-gray-900 dark:text-white">${player.name}</p>
+                                <p class="text-xs text-gray-600 dark:text-gray-400">${player.points.toLocaleString()} pts • ${player.records} WRs</p>
+                            </div>
+                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            </svg>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            // Add map results
+            if (mapMatches.length > 0) {
+                resultsHTML += '<div class="p-2 text-xs font-semibold text-gray-500 dark:text-gray-400 border-b border-gray-200 dark:border-gray-700' + (playerMatches.length > 0 ? ' border-t mt-2' : '') + '">MAPS</div>';
+                resultsHTML += mapMatches.map(map => {
+                    let difficultyColor = '';
+                    if (map.difficulty === 'Easy') difficultyColor = 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400';
+                    else if (map.difficulty === 'Medium') difficultyColor = 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400';
+                    else if (map.difficulty === 'Hard') difficultyColor = 'bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-400';
+                    else difficultyColor = 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400';
+
+                    return `
+                        <div class="search-result-item flex items-center space-x-3 p-3 hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer transition" onclick="window.location.href='map-leaderboard.html'">
+                            <div class="w-10 h-10 rounded bg-gradient-to-br ${map.color} flex items-center justify-center flex-shrink-0">
+                                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path>
+                                </svg>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-center space-x-2">
+                                    <p class="font-semibold text-gray-900 dark:text-white">${map.name}</p>
+                                    <span class="px-2 py-0.5 ${difficultyColor} text-xs font-semibold rounded">${map.difficulty}</span>
+                                </div>
+                                <p class="text-xs text-gray-600 dark:text-gray-400">WR: ${map.wr} • ${map.runs.toLocaleString()} runs</p>
+                            </div>
+                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            </svg>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            resultsContainer.innerHTML = resultsHTML;
+            resultsContainer.classList.remove('hidden');
+        }
+
+        // Desktop search
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase().trim();
+            performSearch(query, searchResults);
+        });
+
+        // Mobile search
+        mobileSearchInput.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase().trim();
+            performSearch(query, mobileSearchResults);
+        });
+
+        // Close search results when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
+                searchResults.classList.add('hidden');
+            }
+            if (!mobileSearchInput.contains(e.target) && !mobileSearchResults.contains(e.target)) {
+                mobileSearchResults.classList.add('hidden');
+            }
+        });
+
+        // Show default results function
+        function showDefaultResults(resultsContainer) {
+            let resultsHTML = '<div class="p-2 text-xs font-semibold text-gray-500 dark:text-gray-400 border-b border-gray-200 dark:border-gray-700">TOP PLAYERS</div>';
+            resultsHTML += players.slice(0, 5).map(player => {
+                let rankBadge = '';
+                if (player.rank === 1) {
+                    rankBadge = '<span class="flex items-center justify-center w-6 h-6 rounded-full bg-gradient-to-br from-yellow-400 to-yellow-600 text-white font-bold text-xs">1</span>';
+                } else if (player.rank === 2) {
+                    rankBadge = '<span class="flex items-center justify-center w-6 h-6 rounded-full bg-gradient-to-br from-gray-300 to-gray-400 text-white font-bold text-xs">2</span>';
+                } else if (player.rank === 3) {
+                    rankBadge = '<span class="flex items-center justify-center w-6 h-6 rounded-full bg-gradient-to-br from-orange-400 to-orange-600 text-white font-bold text-xs">3</span>';
+                } else {
+                    rankBadge = '<span class="text-gray-600 dark:text-gray-400 font-semibold text-sm w-6 text-center">' + player.rank + '</span>';
+                }
+
+                return `
+                    <div class="search-result-item flex items-center space-x-3 p-3 hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer transition" onclick="window.location.href='player-profile.html'">
+                        ${rankBadge}
+                        <img src="https://mc-heads.net/avatar/${player.avatar}/32" class="w-8 h-8 rounded">
+                        <div class="flex-1">
+                            <p class="font-semibold text-gray-900 dark:text-white">${player.name}</p>
+                            <p class="text-xs text-gray-600 dark:text-gray-400">${player.points.toLocaleString()} pts • ${player.records} WRs</p>
+                        </div>
+                        <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </div>
+                `;
+            }).join('');
+
+            resultsHTML += '<div class="p-2 text-xs font-semibold text-gray-500 dark:text-gray-400 border-b border-t border-gray-200 dark:border-gray-700 mt-2">POPULAR MAPS</div>';
+            resultsHTML += maps.slice(0, 3).map(map => {
+                let difficultyColor = '';
+                if (map.difficulty === 'Easy') difficultyColor = 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400';
+                else if (map.difficulty === 'Medium') difficultyColor = 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400';
+                else if (map.difficulty === 'Hard') difficultyColor = 'bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-400';
+                else difficultyColor = 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400';
+
+                return `
+                    <div class="search-result-item flex items-center space-x-3 p-3 hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer transition" onclick="window.location.href='map-leaderboard.html'">
+                        <div class="w-10 h-10 rounded bg-gradient-to-br ${map.color} flex items-center justify-center flex-shrink-0">
+                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path>
+                            </svg>
+                        </div>
+                        <div class="flex-1">
+                            <div class="flex items-center space-x-2">
+                                <p class="font-semibold text-gray-900 dark:text-white">${map.name}</p>
+                                <span class="px-2 py-0.5 ${difficultyColor} text-xs font-semibold rounded">${map.difficulty}</span>
+                            </div>
+                            <p class="text-xs text-gray-600 dark:text-gray-400">WR: ${map.wr} • ${map.runs.toLocaleString()} runs</p>
+                        </div>
+                        <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </div>
+                `;
+            }).join('');
+
+            resultsContainer.innerHTML = resultsHTML;
+            resultsContainer.classList.remove('hidden');
+        }
+
+        // Desktop search focus handler
+        searchInput.addEventListener('focus', (e) => {
+            if (e.target.value.trim().length === 0) {
+                showDefaultResults(searchResults);
+            }
+        });
+
+        // Mobile search focus handler  
+        mobileSearchInput.addEventListener('focus', (e) => {
+            if (e.target.value.trim().length === 0) {
+                showDefaultResults(mobileSearchResults);
+            }
+        });
+</script>
 </body>
 </html>
